@@ -9,11 +9,13 @@ import Utility.CommonFile;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Browser extends CommonFile{
-	
+//Freight_Journal Invoice	
 	protected static WebDriver driver;
 
 	public void initilization() throws Exception {
-		System.setProperty("webdriver.http.factory", "jdk-http-client");
+		
+//Without Using Headless Browser 		
+	/*	System.setProperty("webdriver.http.factory", "jdk-http-client");
 		WebDriverManager.chromedriver().setup();
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--remote-allow-origins=*");
@@ -21,9 +23,21 @@ public class Browser extends CommonFile{
 		cp.setCapability(ChromeOptions.CAPABILITY, options);
 		options.merge(cp);
 		driver = new ChromeDriver(options);
-
 		driver.get(readExcelFileFinal(3, 2));
-		driver.manage().window().maximize();
+		driver.manage().window().maximize();  */
+		
+		
+//Using Headless Browser
+		System.setProperty("webdriver.chrome.driver",
+	            "C:\\Users\\Admin\\eclipse-workspace\\IFFInvoice_Project\\chromedriver.exe");
+		WebDriverManager.chromedriver().setup();
+	    ChromeOptions options = new ChromeOptions();
+	    options.addArguments("--remote-allow-origins=*","ignore-certificate-errors"); 
+	    options.addArguments("headless");
+	    options.addArguments("window-size=1200x600");                                              //Its Run properly
+	    driver = new ChromeDriver(options);
+	    driver.get(readExcelFileFinal(3, 2)); 
+	    driver.manage().window().maximize();   
 	}
 
 }

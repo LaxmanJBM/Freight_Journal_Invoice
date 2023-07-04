@@ -64,6 +64,17 @@ public class PJInvoice2 extends Browser{
 	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$btnAddGrdRow']")private WebElement addBtn;
 	@FindBy(xpath="//textarea[@name='ctl00$ContentPlaceHolder1$txtRmks']")private WebElement finalRemark;
 	
+	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$btnPullInvCharges']")private WebElement pullBookDetails;
+	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$txtBookRef']")private WebElement bookRef;
+	@FindBy(xpath="//*[@id=\"ctl00_ContentPlaceHolder1_grdVCSearch\"]/tbody//tr//td")private List<WebElement> bookRow;
+	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$txtBknFrmdt']")private WebElement fromDate;
+	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$txtBknTodt']")private WebElement toDate;
+	@FindBy(xpath="//*[@id=\"ctl00_ContentPlaceHolder1_btnCostFill\"]")private WebElement fillCostIteam;
+	@FindBy(xpath="//*[@id=\"ctl00_ContentPlaceHolder1_grdVCSearch\"]/tbody//td[16]")private List<WebElement> selectBtns;       //To Show all select btn in colomn
+	@FindBy(xpath="//table[@id='ctl00_ContentPlaceHolder1_grdVCSearch']//tr//td")private List<WebElement> allBookR;
+	@FindBy(xpath="//a[text()='Select']")private WebElement selectBtn;
+	@FindBy(xpath="//input[@name='ctl00$ContentPlaceHolder1$btnPullDetOK']")private WebElement okBtn1;
+	
 	@FindBy(xpath="//div[@class='fmBox ok']")private WebElement succMasg;
 	@FindBy(xpath="//a[text()='Close']")private WebElement closeBtn;
 	@FindBy(xpath="//img[@id='ctl00_btnSave']")private WebElement saveBtn;
@@ -118,7 +129,7 @@ public class PJInvoice2 extends Browser{
 	
 	public void newFreightJournal(int excel) throws Exception {
 		
-		  FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Data1.xlsx");	
+		  FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Freight_Journal.xlsx");	
 			
 			
 				XSSFWorkbook workbook=new XSSFWorkbook(file5);
@@ -132,7 +143,7 @@ public class PJInvoice2 extends Browser{
 				{
 					XSSFRow celldata = sheet.getRow(i);	
 					try {
-					System.out.println("VALUE OF ID ="+ celldata.getCell(1).getNumericCellValue());
+				//	System.out.println("VALUE OF ID ="+ celldata.getCell(1).getNumericCellValue());
 					int idNo = (int) celldata.getCell(1).getNumericCellValue();
 					
 					if(idNo == excel) {
@@ -222,7 +233,7 @@ public class PJInvoice2 extends Browser{
 	
 	public void basicDetail(int excel) throws Exception {
 		
-		  FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Data1.xlsx");	
+		  FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Freight_Journal.xlsx");	
 			
 			
 				XSSFWorkbook workbook=new XSSFWorkbook(file5);
@@ -336,7 +347,7 @@ public class PJInvoice2 extends Browser{
 	
 public void addDetails(int excel) throws Exception {
 	
-	FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Data1.xlsx");	
+	FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\Freight_Journal\\Test_data\\Freight_Journal.xlsx");	
 	
 	
 	XSSFWorkbook workbook=new XSSFWorkbook(file5);
@@ -353,6 +364,76 @@ public void addDetails(int excel) throws Exception {
 		
 		if(idNo == excel) {
 			
+			
+//PULL BOOK DETAILS
+			Thread.sleep(1000);
+			try {
+			pullBookDetails.click();}
+			catch(Exception f) {Thread.sleep(1000);}
+			
+//Date
+			try {
+			String frDate = celldata.getCell(3).getStringCellValue();
+			fromDate.clear();
+			JavascriptExecutor js2=(JavascriptExecutor)driver;
+			js2.executeScript("arguments[0].value='"+ frDate +"'" , fromDate);
+		
+			String TDate = celldata.getCell(4).getStringCellValue();
+			toDate.clear();
+			JavascriptExecutor js3=(JavascriptExecutor)driver;
+			js3.executeScript("arguments[0].value='"+ TDate +"'" , toDate);}
+			catch(Exception e) {Thread.sleep(1000);}
+			
+			
+			
+//BOOK RE
+			try {
+			String bookR = celldata.getCell(2).getStringCellValue();
+			bookRef.clear();
+			JavascriptExecutor js4=(JavascriptExecutor)driver;
+			js4.executeScript("arguments[0].value='"+ bookR +"'" , bookRef);}
+			catch(Exception p) {Thread.sleep(1000);}
+			                                                                   
+//FILL COST ITEAM
+			try {
+			Thread.sleep(1000);
+			fillCostIteam.click();
+		/*	JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].click();", fillCostIteam);
+			System.out.println("Status ="+fillCostIteam.isSelected());*/}
+		catch(Exception p) {Thread.sleep(1000);}
+			Thread.sleep(2500);
+//TO SELECT BOOK FROM LIST
+/*			Thread.sleep(1500);
+			String booR = celldata.getCell(2).getStringCellValue();
+			
+			for(int i1=0;i1<=allBookR.size();i1++) {
+				if(allBookR.get(i1).getText().contains("booR")) {
+					allBookR.get(i1).click();
+					Thread.sleep(1000);
+					selectBtn.click();
+				}}*/
+//CLICK ON SELECT BTN
+		//	selectBtns.click();
+			try {
+			for(int i1=1;i1<=bookRow.size();i1++) {
+				if(bookRow.get(i1).getText().contains("Select")) {
+					bookRow.get(i1).click();
+				}
+			}
+			}
+			catch(Exception d) {Thread.sleep(1000);}
+			
+//OK BUTTON
+			try {
+			Thread.sleep(1000);
+			okBtn1.click();}
+			catch(Exception e) {Thread.sleep(1000);}
+			
+			
+			
+/*			
+			
 //ADD DETAILS
 			try {
 				Thread.sleep(1000);
@@ -368,7 +449,8 @@ public void addDetails(int excel) throws Exception {
 				bookText.sendKeys(Keys.ENTER);
 				for(int i2=2;i2<=allBookRef.size();i2++) {
 					if(allBookRef.get(i2).getText().equalsIgnoreCase(bookName)) {
-						allBookRef.get(i2).click();}}	
+						allBookRef.get(i2).click();
+						break;}}	
 			}
 			catch(Exception d) {Thread.sleep(1000);}
 			
@@ -376,20 +458,21 @@ public void addDetails(int excel) throws Exception {
 		
 			try {
 				tariffD.click();
-				String tarif = celldata.getCell(3).getStringCellValue();
+				String tarif = celldata.getCell(5).getStringCellValue();
 				Thread.sleep(1000);
 				tariffText.sendKeys(tarif);
 				tariffText.sendKeys(Keys.ENTER);
 				for(int a=2;a<=tariffList.size();a++) {
 					if(tariffList.get(a).getText().equalsIgnoreCase(tarif)) {
-						tariffList.get(a).click();}}
+						tariffList.get(a).click();
+						break;}}
 			}
 			catch(Exception e) {Thread.sleep(1000);}
 			
 //DESCRIPTION	
 			
 			try {
-				String description = celldata.getCell(4).getStringCellValue();
+				String description = celldata.getCell(6).getStringCellValue();
 				desc.clear();
 				desc.sendKeys(description);}
 			catch(Exception f) {Thread.sleep(800);}
@@ -397,7 +480,7 @@ public void addDetails(int excel) throws Exception {
 //UOM
 			
 			try {
-				String uomA = celldata.getCell(5).getStringCellValue();
+				String uomA = celldata.getCell(7).getStringCellValue();
 				Select se5=new Select(uom);
 				se5.selectByVisibleText(uomA);
 			}
@@ -407,7 +490,7 @@ public void addDetails(int excel) throws Exception {
 			Thread.sleep(800);
 			try {	
 		rate.click();
-        double rateT = celldata.getCell(6).getNumericCellValue();
+        double rateT = celldata.getCell(8).getNumericCellValue();
 		JavascriptExecutor js4=(JavascriptExecutor)driver;
 		js4.executeScript("arguments[0].value='"+ rateT +"'" , rate);}
 		catch(Exception a) {Thread.sleep(1000);}
@@ -415,7 +498,7 @@ public void addDetails(int excel) throws Exception {
 //QTY
 			Thread.sleep(1000);
 			try {
-			double qty1 = celldata.getCell(7).getNumericCellValue();
+			double qty1 = celldata.getCell(9).getNumericCellValue();
 			JavascriptExecutor js3=(JavascriptExecutor)driver;
 			js3.executeScript("arguments[0].value='"+ qty1 +"'" , qty);
 			Thread.sleep(1000);
@@ -425,7 +508,7 @@ public void addDetails(int excel) throws Exception {
 //CURRENCY
 			Thread.sleep(1000);
 			try {
-				String curr = celldata.getCell(8).getStringCellValue();
+				String curr = celldata.getCell(10).getStringCellValue();
 				Select se1=new Select(currency);
 				se1.selectByVisibleText(curr);
 				Thread.sleep(1000);}
@@ -434,15 +517,17 @@ public void addDetails(int excel) throws Exception {
 //REMARK
 			Thread.sleep(1000);
 			try {
-				String rem = celldata.getCell(9).getStringCellValue();
+				String rem = celldata.getCell(11).getStringCellValue();
 				remark.clear();
 				remark.sendKeys(rem);}
 			catch(Exception r) {Thread.sleep(1000);}
 			
 //ADD
+			Thread.sleep(100);
+			addBtn.click();*/
+			
 			Thread.sleep(1500);
 			try {
-				addBtn.click();
 //Drsft Succ Save      * Document is saved as Draft Successfully
 				if(succMasg.getText().contains("* Document is saved as Draft Successfully")) {
 					Thread.sleep(1000);
@@ -456,10 +541,13 @@ public void addDetails(int excel) throws Exception {
 			jse.executeScript("window.scrollBy(0,300)");
 			
 			Thread.sleep(1000);
-			String fRem = celldata.getCell(10).getStringCellValue();
+			String fRem = celldata.getCell(11).getStringCellValue();
+			finalRemark.clear();
 			finalRemark.sendKeys(fRem);
 			
-			
+			JavascriptExecutor jsd = (JavascriptExecutor)driver;
+			jsd.executeScript("window.scrollBy(0,-150)");
+					
 	}
 	}
 		catch(NullPointerException e) {
@@ -479,21 +567,19 @@ public void save() throws Exception {
 				driver.switchTo().alert().accept();}
 		catch(Exception e) {Thread.sleep(1000);}
 		
-	//	System.out.println("Massage ="+jurnalSave.getText());                 //* Freight Journal 'CHN/GPJ/00007/23-24'; Voucher Number 'NWL-PJ-000008-23-24' Saved Successfully
+	                //* Freight Journal 'CHN/GPJ/00007/23-24'; Voucher Number 'NWL-PJ-000008-23-24' Saved Successfully
 		if((jurnalSave.getText().contains("* Freight Journal ")) || (jurnalSave.getText().contains(" Voucher Number ")) || (jurnalSave.getText().contains(" Saved Successfully"))) {
 			driver.findElement(By.xpath("//a[text()='Close']")).click();
 			Thread.sleep(1500);
 			close.click();
 			
 			Thread.sleep(1000);
-			 undo.click();
+		//	 undo.click();
+			 driver.navigate().refresh();
 			 
 			 Thread.sleep(1000);
 			 newBtnS.click();	
 		}
-		
-		
-		
 	}
 	catch(Exception s) {
 		driver.switchTo().alert().getText();
