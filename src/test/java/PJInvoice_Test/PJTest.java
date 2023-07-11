@@ -13,7 +13,7 @@ import InvoiceS.PJInvoice1;
 import InvoiceS.PJInvoice2;
 import Utility.CommonFile;
 
-public class PJ_Test extends Browser {
+public class PJTest extends Browser {
 
 	PJInvoice1 pj1;
 	PJInvoice2 pj2;

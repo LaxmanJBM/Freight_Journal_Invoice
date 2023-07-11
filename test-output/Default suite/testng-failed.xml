@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="PJInvoice_Test.PJ_Test">
+      <class name="PJInvoice_Test.PJTest">
         <methods>
           <include name="exit"/>
           <include name="data"/>
           <include name="setup"/>
         </methods>
-      </class> <!-- PJInvoice_Test.PJ_Test -->
+      </class> <!-- PJInvoice_Test.PJTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
